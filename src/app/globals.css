@@ -1,0 +1,2085 @@
+/* --- Loop Engineering Typing Game CSS (Vanilla CSS) --- */
+@import url('https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cinzel+Decorative:wght@700;900&family=Playfair+Display:ital,wght@0,600;0,800;0,900;1,400;1,700&family=Cormorant+Garamond:wght@600;700&display=swap');
+
+:root {
+  --bg-dark: #121214;
+  --panel-bg: #17171b;
+  --panel-light: #18181c;
+  --card-bg: #141416;
+  --primary-red: #d9383a;
+  --primary-red-hover: #e64d4f;
+  --primary-gold: #cca43b;
+  --primary-gold-hover: #dfb84c;
+  --text-white: #f3f4f6;
+  --text-gray: #9ca3af;
+  --text-dark-gray: #6b7280;
+  --border-muted: rgba(255, 255, 255, 0.05);
+  --border-active: rgba(204, 164, 59, 0.3);
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans JP", sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  --font-cinzel: "Cinzel Decorative", "Cinzel", "Times New Roman", serif;
+  --font-playfair: "Playfair Display", "Cormorant Garamond", Georgia, serif;
+  --font-alex: "Alex Brush", cursive;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--bg-dark);
+  color: var(--text-white);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Base Layout Containers */
+.game-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 0.85rem 1.5rem;
+  position: relative;
+  background-color: var(--bg-dark);
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* Background Gradients & Glows */
+.bg-glow-red {
+  position: absolute;
+  top: -10%;
+  left: -10%;
+  width: 40vw;
+  height: 40vw;
+  border-radius: 50%;
+  background-color: var(--primary-red);
+  opacity: 0.03;
+  filter: blur(120px);
+  pointer-events: none;
+}
+
+.bg-glow-gold {
+  position: absolute;
+  bottom: -10%;
+  right: -10%;
+  width: 40vw;
+  height: 40vw;
+  border-radius: 50%;
+  background-color: var(--primary-gold);
+  opacity: 0.03;
+  filter: blur(120px);
+  pointer-events: none;
+}
+
+.bg-glow-radial {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 70vw;
+  height: 70vw;
+  border-radius: 50%;
+  opacity: 0.03;
+  filter: blur(150px);
+  pointer-events: none;
+}
+
+.bg-glow-green-rad {
+  background-color: #4ade80;
+}
+
+.bg-glow-red-rad {
+  background-color: var(--primary-red);
+}
+
+/* Main Menu / Typography */
+.menu-header {
+  text-align: center;
+  z-index: 10;
+  max-w: 42rem;
+  margin-bottom: 3rem;
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  margin-bottom: 1rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: var(--primary-gold);
+  text-transform: uppercase;
+  border: 1px solid rgba(204, 164, 59, 0.3);
+  border-radius: 9999px;
+  background-color: rgba(204, 164, 59, 0.05);
+}
+
+.title-main {
+  font-size: 3rem;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  margin-bottom: 1rem;
+  color: var(--text-white);
+}
+
+.title-highlight {
+  color: var(--primary-red);
+}
+
+.desc-muted {
+  color: var(--text-gray);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  max-width: 28rem;
+  margin: 0 auto;
+}
+
+/* Cards Grid for Course Selection */
+.course-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+  width: 100%;
+  max-width: 62rem;
+  z-index: 10;
+  margin-bottom: 0.75rem;
+}
+
+@media (min-width: 768px) {
+  .course-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.course-card {
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 0.85rem 1.15rem;
+  border-radius: 0.85rem;
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-muted);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.course-card:hover {
+  border-color: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+.course-card.selected {
+  background-color: var(--panel-light);
+  border-color: var(--primary-gold);
+  transform: scale(1.02);
+  box-shadow: 0 8px 25px rgba(204, 164, 59, 0.1);
+}
+
+.course-card.selected::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 25%;
+  bottom: 25%;
+  width: 3px;
+  background-color: var(--primary-gold);
+  border-radius: 0 4px 4px 0;
+}
+
+.recommended-badge {
+  position: absolute;
+  top: -0.65rem;
+  right: 1.25rem;
+  padding: 0.12rem 0.65rem;
+  font-size: 0.62rem;
+  font-weight: 700;
+  color: #000;
+  background-color: var(--primary-gold);
+  border-radius: 9999px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.card-tag {
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--text-dark-gray);
+  text-transform: uppercase;
+}
+
+.course-card.selected .card-tag {
+  color: var(--primary-gold);
+}
+
+.card-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-top: 0.25rem;
+  color: var(--text-white);
+}
+
+.card-meta {
+  font-size: 0.72rem;
+  color: var(--text-dark-gray);
+  margin-top: 0.15rem;
+}
+
+.card-body {
+  font-size: 0.8rem;
+  color: var(--text-gray);
+  margin-top: 0.45rem;
+  line-height: 1.4;
+}
+
+.card-footer {
+  margin-top: 0.75rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--border-muted);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.card-footer-label {
+  font-size: 0.75rem;
+  color: var(--text-dark-gray);
+}
+
+.card-footer-val {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-white);
+}
+
+/* Action Area & Buttons */
+.action-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  z-index: 10;
+}
+
+.btn-primary {
+  cursor: pointer;
+  position: relative;
+  padding: 1rem 2rem;
+  background: linear-gradient(to right, var(--primary-red), var(--primary-red-hover));
+  color: var(--text-white);
+  font-weight: 600;
+  border: none;
+  border-radius: 9999px;
+  overflow: hidden;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 0 30px rgba(217, 56, 58, 0.35);
+}
+
+.btn-primary:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.btn-primary-text {
+  position: relative;
+  z-index: 10;
+  letter-spacing: 0.05em;
+}
+
+.btn-primary::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, var(--primary-gold), var(--primary-gold-hover));
+  transform: translateX(-100%);
+  transition: transform 0.5s ease-out;
+  z-index: 1;
+}
+
+.btn-primary:hover::after {
+  transform: translateX(0);
+}
+
+.warning-hint {
+  font-size: 0.75rem;
+  color: var(--text-dark-gray);
+  letter-spacing: 0.02em;
+}
+
+/* -------------------- PLAYSCREEN STYLES -------------------- */
+.play-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: var(--bg-dark);
+  transition: background-color 0.15s ease;
+  user-select: none;
+  overflow: hidden;
+  position: relative;
+}
+
+.play-container.flash-red {
+  background-color: #251214;
+}
+
+/* Play Header */
+.play-header {
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+  background-color: var(--panel-bg);
+  border-bottom: 1px solid var(--border-muted);
+  z-index: 10;
+  gap: 1rem;
+}
+
+@media (min-width: 768px) {
+  .play-header {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+.header-status-group {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+@media (min-width: 640px) {
+  .header-status-group {
+    gap: 3rem;
+  }
+}
+
+.header-stat-box {
+  display: flex;
+  flex-direction: column;
+}
+
+.header-stat-label {
+  font-size: 0.75rem;
+  color: var(--text-gray);
+}
+
+.header-stat-val {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-white);
+}
+
+.header-stat-val.gold {
+  color: var(--primary-gold);
+  font-size: 1.5rem;
+  font-weight: 900;
+}
+
+.header-stat-val.profit {
+  color: #4ade80;
+}
+
+.header-stat-val.loss {
+  color: var(--text-gray);
+}
+
+.timer-box {
+  display: flex;
+  flex-direction: column;
+  min-width: 120px;
+}
+
+.timer-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 0.25rem;
+}
+
+.timer-bar-outer {
+  height: 6px;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 9999px;
+  overflow: hidden;
+}
+
+.timer-bar-inner {
+  height: 100%;
+  transition: all 0.3s ease;
+  background-color: var(--primary-gold);
+}
+
+.timer-bar-inner.warning {
+  background-color: var(--primary-red);
+  animation: pulse 1s infinite alternate;
+}
+
+.combo-box {
+  display: flex;
+  flex-direction: column;
+  min-width: 70px;
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.05);
+  padding: 0.35rem 0.75rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--border-muted);
+}
+
+.combo-label {
+  font-size: 0.6rem;
+  color: var(--text-gray);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Conveyor Track Section */
+.conveyor-belt-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  padding: 0 2rem;
+}
+
+.conveyor-track {
+  width: 100%;
+  height: 6rem;
+  background-color: var(--panel-light);
+  border-top: 1px solid var(--border-muted);
+  border-bottom: 1px solid var(--border-muted);
+  position: absolute;
+  display: flex;
+  align-items: center;
+  box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+.conveyor-track-rail {
+  width: 100%;
+  height: 4px;
+  background-color: #25252b;
+  border-top: 1px solid rgba(0,0,0,0.3);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.conveyor-rollers {
+  position: absolute;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  opacity: 0.15;
+  pointer-events: none;
+}
+
+.conveyor-roller {
+  width: 6px;
+  height: 5rem;
+  background-color: var(--text-gray);
+  border-radius: 9999px;
+}
+
+/* Animated Plate / Ballet Stage Actor */
+.sushi-plate-wrapper {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  will-change: transform;
+}
+
+.sushi-plate-wrapper.shake {
+  animation: sokuon-shake 0.15s ease-in-out infinite;
+}
+
+.plate-shadow {
+  width: 7rem;
+  height: 0.35rem;
+  background-color: rgba(0, 0, 0, 0.4);
+  border-radius: 50%;
+  filter: blur(4px);
+  position: absolute;
+  bottom: 0;
+}
+
+.plate-body {
+  width: 6rem;
+  height: 2rem;
+  background: linear-gradient(to bottom, var(--primary-gold), #a37e1a);
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  position: relative;
+  z-index: 10;
+}
+
+.plate-inner {
+  width: 84%;
+  height: 70%;
+  background: linear-gradient(to bottom, #f0d981, var(--primary-gold));
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sushi-icon {
+  font-size: 1.85rem;
+  transform: translateY(-0.9rem);
+  user-select: none;
+}
+
+.plate-price-tag {
+  margin-top: 0.25rem;
+  padding: 0.15rem 0.5rem;
+  background-color: rgba(0, 0, 0, 0.7);
+  border-radius: 0.25rem;
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--primary-gold);
+  border: 1px solid rgba(204, 164, 59, 0.2);
+  z-index: 10;
+}
+
+.bonus-alert {
+  position: absolute;
+  top: 25%;
+  padding: 0.5rem 1.5rem;
+  background-color: var(--primary-gold);
+  color: #000;
+  font-weight: 900;
+  font-size: 1.125rem;
+  border-radius: 9999px;
+  box-shadow: 0 0 20px rgba(204, 164, 59, 0.4);
+  animation: alert-bounce 0.8s infinite alternate;
+  z-index: 20;
+}
+
+/* Typing Display area */
+.typing-display-area {
+  background-color: var(--panel-bg);
+  border-top: 1px solid var(--border-muted);
+  padding: 3rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 18.75rem;
+  z-index: 10;
+}
+
+.word-main {
+  font-size: 2.25rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--text-white);
+  margin-bottom: 0.5rem;
+}
+
+@media (min-width: 640px) {
+  .word-main {
+    font-size: 3rem;
+  }
+}
+
+.word-sub {
+  font-size: 0.875rem;
+  color: var(--text-gray);
+  letter-spacing: 0.1em;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+}
+
+.romaji-guide-box {
+  background-color: var(--bg-dark);
+  border: 1px solid var(--border-muted);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: inset 0 2px 8px rgba(0,0,0,0.5);
+  display: inline-block;
+  min-width: 17.5rem;
+}
+
+@media (min-width: 640px) {
+  .romaji-guide-box {
+    min-width: 25rem;
+  }
+}
+
+.romaji-text {
+  font-family: var(--font-mono);
+  font-size: 1.25rem;
+  letter-spacing: 0.15em;
+  font-weight: 700;
+}
+
+@media (min-width: 640px) {
+  .romaji-text {
+    font-size: 1.75rem;
+  }
+}
+
+.romaji-typed {
+  color: var(--primary-gold);
+}
+
+.romaji-remaining {
+  color: var(--text-white);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+  padding-bottom: 0.125rem;
+  animation: typing-cursor 0.8s infinite alternate;
+}
+
+.play-footer {
+  padding: 1rem;
+  background-color: #141417;
+  text-align: center;
+  font-size: 0.75rem;
+  color: var(--text-dark-gray);
+  border-top: 1px solid var(--border-muted);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+}
+
+@media (min-width: 640px) {
+  .play-footer {
+    flex-direction: row;
+  }
+}
+
+.footer-back-label {
+  letter-spacing: 0.02em;
+}
+
+.footer-tip {
+  display: flex;
+  gap: 1rem;
+}
+
+/* -------------------- RESULT SCREEN STYLES (COMPACT) -------------------- */
+.result-card-container {
+  width: 100%;
+  max-width: 44rem;
+  background-color: var(--panel-bg);
+  border: 1px solid var(--border-muted);
+  border-radius: 1.25rem;
+  padding: 1.15rem 1.5rem;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+  z-index: 10;
+  text-align: center;
+  animation: result-fade-in 0.5s ease-out;
+}
+
+@media (min-width: 640px) {
+  .result-card-container {
+    padding: 1.35rem 1.85rem;
+  }
+}
+
+.result-card-container h2 {
+  font-size: 1.4rem;
+  font-weight: 900;
+  margin-top: 0.15rem;
+  margin-bottom: 0.75rem;
+}
+
+@media (min-width: 640px) {
+  .result-card-container h2 {
+    font-size: 1.75rem;
+  }
+}
+
+.result-balance-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.6rem;
+  margin-bottom: 0.65rem;
+}
+
+@media (min-width: 768px) {
+  .result-balance-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.result-balance-box {
+  background-color: var(--bg-dark);
+  padding: 0.55rem 0.75rem;
+  border-radius: 0.65rem;
+  border: 1px solid var(--border-muted);
+}
+
+.balance-title {
+  font-size: 0.68rem;
+  color: var(--text-gray);
+  display: block;
+  margin-bottom: 0.1rem;
+}
+
+.balance-val {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-white);
+}
+
+.balance-val.positive {
+  color: #4ade80;
+  font-weight: 900;
+}
+
+.balance-val.negative {
+  color: var(--primary-red);
+  font-weight: 900;
+}
+
+.rank-banner {
+  background-color: rgba(255, 255, 255, 0.015);
+  border: 1px solid var(--border-muted);
+  border-radius: 0.75rem;
+  padding: 0.6rem 0.85rem;
+  margin-bottom: 0.65rem;
+  text-align: center;
+}
+
+.rank-banner-label {
+  font-size: 0.6rem;
+  font-weight: 700;
+  color: var(--primary-gold);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.rank-banner-title {
+  font-size: 1.2rem;
+  font-weight: 900;
+  margin-top: 0.1rem;
+  margin-bottom: 0.25rem;
+}
+
+.rank-banner-title.level-仙人 {
+  color: var(--primary-red);
+  filter: drop-shadow(0 0 8px rgba(217, 56, 58, 0.5));
+}
+
+.rank-banner-title.level-大将 {
+  color: #fbbf24;
+}
+
+.rank-banner-title.level-職人 {
+  color: #4ade80;
+}
+
+.rank-banner-title.level-常連 {
+  color: var(--primary-gold);
+}
+
+.rank-banner-title.level-一般 {
+  color: #60a5fa;
+}
+
+.rank-banner-desc {
+  font-size: 0.78rem;
+  color: var(--text-gray);
+  max-width: 32rem;
+  margin: 0 auto;
+  line-height: 1.4;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.6rem;
+  margin-bottom: 0.65rem;
+}
+
+@media (min-width: 640px) {
+  .stats-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.stats-card {
+  background-color: var(--bg-dark);
+  padding: 0.55rem 0.75rem;
+  border-radius: 0.65rem;
+  border: 1px solid var(--border-muted);
+  text-align: left;
+}
+
+.stats-card-label {
+  font-size: 0.68rem;
+  color: var(--text-gray);
+  display: block;
+  margin-bottom: 0.1rem;
+}
+
+.stats-card-val {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--text-white);
+  font-family: var(--font-mono);
+}
+
+.stats-card-val-unit {
+  font-size: 0.68rem;
+  font-family: var(--font-sans);
+  color: var(--text-gray);
+  margin-left: 0.25rem;
+}
+
+.accuracy-bar-box {
+  display: flex;
+  flex-direction: column;
+  background-color: rgba(18, 18, 20, 0.5);
+  border: 1px solid var(--border-muted);
+  padding: 0.55rem 0.85rem;
+  border-radius: 0.65rem;
+  margin-bottom: 0.85rem;
+  text-align: left;
+  gap: 0.35rem;
+}
+
+@media (min-width: 640px) {
+  .accuracy-bar-box {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+.acc-label-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.acc-label {
+  font-size: 0.68rem;
+  color: var(--text-gray);
+}
+
+.acc-val {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-white);
+  font-family: var(--font-mono);
+}
+
+.acc-bar-outer {
+  flex: 1;
+  width: 100%;
+  height: 6px;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 9999px;
+  overflow: hidden;
+}
+
+.acc-bar-inner {
+  height: 100%;
+  background: linear-gradient(to right, var(--primary-gold), #4ade80);
+  border-radius: 9999px;
+  transition: width 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.result-btn-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+@media (min-width: 640px) {
+  .result-btn-group {
+    flex-direction: row;
+  }
+}
+
+.btn-secondary {
+  cursor: pointer;
+  width: 100%;
+  padding: 0.65rem 1.6rem;
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-white);
+  font-weight: 600;
+  border-radius: 9999px;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+}
+
+@media (min-width: 640px) {
+  .btn-secondary {
+    width: auto;
+  }
+}
+
+.btn-secondary:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  transform: translateY(-1px);
+}
+
+.btn-secondary:active {
+  transform: translateY(0);
+}
+
+.btn-accent {
+  cursor: pointer;
+  width: 100%;
+  padding: 0.65rem 1.85rem;
+  background-color: var(--primary-gold);
+  color: #000;
+  font-weight: 600;
+  border: none;
+  border-radius: 9999px;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+}
+
+@media (min-width: 640px) {
+  .btn-accent {
+    width: auto;
+  }
+}
+
+.btn-accent:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 20px rgba(204, 164, 59, 0.3);
+}
+
+.btn-accent:active {
+  transform: translateY(0);
+}
+
+/* --- ANIMATION DEFINITIONS --- */
+@keyframes sokuon-shake {
+  0%, 100% { transform: translateY(0); }
+  25% { transform: translateY(-3px); }
+  75% { transform: translateY(3px); }
+}
+
+@keyframes typing-cursor {
+  0% { border-color: rgba(255, 255, 255, 0.3); }
+  100% { border-color: var(--primary-gold); }
+}
+
+@keyframes pulse {
+  0% { opacity: 0.6; }
+  100% { opacity: 1; }
+}
+
+@keyframes alert-bounce {
+  0% { transform: translateY(0) scale(1); }
+  100% { transform: translateY(-6px) scale(1.03); }
+}
+
+@keyframes result-fade-in {
+  0% { opacity: 0; transform: scale(0.97) translateY(10px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; transform: translateY(10px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* ========================================================= */
+/* --- CLASSICAL BALLET THEATER THEME EXTENSIONS --- */
+/* ========================================================= */
+
+:root {
+  --ballet-bg: #0f111a;
+  --ballet-burgundy: #4a0e1c;
+  --ballet-burgundy-light: #6a1428;
+  --ballet-gold: #e5ca72;
+  --ballet-gold-light: #f7e29c;
+  --ballet-rose: #e6a5b0;
+}
+
+.ballet-theme {
+  background-color: var(--ballet-bg);
+}
+
+.bg-glow-burgundy {
+  position: absolute;
+  top: -10%;
+  left: -10%;
+  width: 45vw;
+  height: 45vw;
+  border-radius: 50%;
+  background-color: var(--ballet-burgundy);
+  opacity: 0.15;
+  filter: blur(140px);
+  pointer-events: none;
+}
+
+.bg-glow-burgundy-rad {
+  background-color: var(--ballet-burgundy);
+}
+
+.bg-glow-gold-rad {
+  background-color: var(--ballet-gold);
+}
+
+.ballet-badge {
+  border-color: rgba(229, 202, 114, 0.4);
+  color: var(--ballet-gold);
+  background-color: rgba(229, 202, 114, 0.08);
+}
+
+.ballet-gold {
+  color: var(--ballet-gold) !important;
+}
+
+.ballet-card {
+  background-color: #151824;
+  border-color: rgba(229, 202, 114, 0.1);
+}
+
+.ballet-card:hover {
+  border-color: rgba(229, 202, 114, 0.3);
+}
+
+.ballet-card.selected {
+  background-color: #1a1e2e;
+  border-color: var(--ballet-gold);
+  box-shadow: 0 10px 30px rgba(229, 202, 114, 0.12);
+}
+
+.ballet-card.selected::before {
+  background-color: var(--ballet-gold);
+}
+
+.ballet-rec {
+  background-color: var(--ballet-gold);
+  color: #1a080c;
+}
+
+.ballet-tag {
+  color: #8b92a5;
+}
+
+.ballet-card.selected .ballet-tag {
+  color: var(--ballet-gold);
+}
+
+.ballet-btn {
+  background: linear-gradient(135deg, var(--ballet-burgundy), var(--ballet-burgundy-light));
+  border: 1px solid rgba(229, 202, 114, 0.3);
+  box-shadow: 0 4px 20px rgba(74, 14, 28, 0.4);
+}
+
+.ballet-btn::after {
+  background: linear-gradient(135deg, var(--ballet-gold), var(--ballet-gold-light));
+}
+
+.ballet-play {
+  background-color: var(--ballet-bg);
+}
+
+.ballet-play-header {
+  background-color: #131520;
+  border-bottom: 1px solid rgba(229, 202, 114, 0.15);
+}
+
+.ballet-label {
+  color: var(--ballet-rose);
+}
+
+.ballet-title-val {
+  color: #fff;
+}
+
+.ballet-timer-bar {
+  background: linear-gradient(to right, var(--ballet-rose), var(--ballet-gold));
+}
+
+.ballet-combo-box {
+  background-color: rgba(229, 202, 114, 0.08);
+  border-color: rgba(229, 202, 114, 0.2);
+}
+
+/* Stage & Footlights */
+.ballet-stage-section {
+  background: radial-gradient(circle at 50% 120%, #2a1622 0%, #0f111a 70%);
+}
+
+.stage-curtain-top {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 24px;
+  background: linear-gradient(to bottom, var(--ballet-burgundy), transparent);
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.stage-floor-track {
+  width: 100%;
+  height: 12rem;
+  background: linear-gradient(180deg, #0c0e16 0%, #191624 30%, #281c2b 70%, #15111b 100%);
+  border-top: 2px solid rgba(229, 202, 114, 0.4);
+  border-bottom: 3px solid rgba(229, 202, 114, 0.7);
+  position: absolute;
+  display: flex;
+  align-items: center;
+  box-shadow: inset 0 10px 35px rgba(0, 0, 0, 0.85), 0 20px 50px rgba(0, 0, 0, 0.9);
+  overflow: hidden;
+}
+
+/* Floor perspective lines representing classical theater stage planks */
+.stage-floor-track::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: repeating-linear-gradient(
+    90deg,
+    transparent 0px,
+    transparent 120px,
+    rgba(229, 202, 114, 0.04) 120px,
+    rgba(229, 202, 114, 0.04) 122px
+  );
+  pointer-events: none;
+}
+
+.stage-footlights {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 5px;
+  background: repeating-linear-gradient(
+    90deg,
+    #ffe8a3 0px,
+    #ffe8a3 16px,
+    transparent 16px,
+    transparent 42px
+  );
+  opacity: 0.85;
+  filter: drop-shadow(0 -3px 8px #ffe8a3);
+}
+
+.stage-actor-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  height: 11.5rem;
+}
+
+/* Overhead Pin-Spotlight Beam */
+.pin-spotlight-beam {
+  position: absolute;
+  top: -40px;
+  width: 15rem;
+  height: 12rem;
+  background: radial-gradient(ellipse at 50% 0%, rgba(255, 245, 200, 0.3) 0%, rgba(229, 202, 114, 0.08) 50%, transparent 80%);
+  clip-path: polygon(35% 0%, 65% 0%, 100% 100%, 0% 100%);
+  pointer-events: none;
+  animation: spotlightPulse 3s ease-in-out infinite alternate;
+}
+
+@keyframes spotlightPulse {
+  0% { opacity: 0.85; transform: scaleX(0.95); }
+  100% { opacity: 1; transform: scaleX(1.05); }
+}
+
+/* Dancer directly performing on the stage */
+.ballet-dancer-on-stage {
+  position: relative;
+  z-index: 10;
+  margin-bottom: 0.25rem;
+}
+
+.ballet-icon {
+  display: inline-block;
+  font-size: 5.5rem;
+  line-height: 1;
+  user-select: none;
+  filter: drop-shadow(0 12px 18px rgba(0, 0, 0, 0.85)) drop-shadow(0 0 25px rgba(255, 240, 180, 0.7));
+  transform-origin: 50% 85%;
+  animation: balletGlide 2.2s ease-in-out infinite alternate;
+}
+
+/* Specific Motion Choreographies based on term category & characters */
+.ballet-icon.dance-glide {
+  animation: balletGlide 2.2s ease-in-out infinite alternate;
+}
+
+.ballet-icon.dance-leap {
+  animation: balletLeap 1.4s cubic-bezier(0.25, 0.7, 0.25, 1) infinite;
+}
+
+.ballet-icon.dance-spin {
+  animation: balletPirouette 1.8s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+}
+
+.ballet-icon.dance-passion {
+  animation: balletPassion 1.6s ease-in-out infinite alternate;
+}
+
+.ballet-icon.dance-swan {
+  animation: balletSwan 2.8s ease-in-out infinite alternate;
+}
+
+.ballet-icon.dance-doll {
+  animation: balletClockwork 1.2s steps(4, jump-none) infinite alternate;
+}
+
+/* 1. Graceful Glide (Adagio / Classic steps) */
+@keyframes balletGlide {
+  0% {
+    transform: translateY(0px) rotate(-2deg) scale(1);
+  }
+  50% {
+    transform: translateY(-12px) rotate(2deg) scale(1.04);
+  }
+  100% {
+    transform: translateY(-2px) rotate(-1deg) scale(0.98);
+  }
+}
+
+/* 2. Grand Jeté / Flying Leap */
+@keyframes balletLeap {
+  0% {
+    transform: translateY(0px) scale(1, 0.92) rotate(-4deg);
+  }
+  20% {
+    transform: translateY(-30px) scale(0.96, 1.08) rotate(4deg);
+  }
+  50% {
+    transform: translateY(-38px) scale(1.06, 0.98) rotate(7deg);
+  }
+  75% {
+    transform: translateY(-16px) scale(0.98, 1.02) rotate(2deg);
+  }
+  100% {
+    transform: translateY(0px) scale(1, 0.92) rotate(-4deg);
+  }
+}
+
+/* 3. Pirouette / Fouetté 3D spin */
+@keyframes balletPirouette {
+  0% {
+    transform: translateY(0) rotate(0deg) scale(1);
+  }
+  25% {
+    transform: translateY(-10px) rotate(100deg) scale(0.85, 1.05);
+  }
+  50% {
+    transform: translateY(-16px) rotate(200deg) scale(0.7, 1.08);
+  }
+  75% {
+    transform: translateY(-8px) rotate(300deg) scale(0.88, 1.04);
+  }
+  100% {
+    transform: translateY(0) rotate(360deg) scale(1);
+  }
+}
+
+/* 4. Passionate Flamenco / Duel */
+@keyframes balletPassion {
+  0% {
+    transform: translateY(0) rotate(-6deg) scale(1);
+  }
+  30% {
+    transform: translateY(-6px) rotate(6deg) scale(1.08);
+  }
+  60% {
+    transform: translateY(-14px) rotate(-4deg) scale(1.02);
+  }
+  100% {
+    transform: translateY(0) rotate(5deg) scale(0.98);
+  }
+}
+
+/* 5. Swan Lake delicate wing flap & float */
+@keyframes balletSwan {
+  0% {
+    transform: translateY(0px) rotate(-1.5deg) scale(1, 1);
+  }
+  35% {
+    transform: translateY(-16px) rotate(2.5deg) scale(1.06, 1.02);
+  }
+  70% {
+    transform: translateY(-22px) rotate(-2deg) scale(1.03, 1.05);
+  }
+  100% {
+    transform: translateY(0px) rotate(-1.5deg) scale(1, 1);
+  }
+}
+
+/* 6. Coppélia Mechanical Puppet Step */
+@keyframes balletClockwork {
+  0% {
+    transform: translateY(0) rotate(-4deg);
+  }
+  50% {
+    transform: translateY(-10px) rotate(0deg);
+  }
+  100% {
+    transform: translateY(0) rotate(4deg);
+  }
+}
+
+/* Fairy dust / Sparkle Trail behind dancer */
+.dancer-fairy-dust {
+  position: absolute;
+  top: 15%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+  z-index: 12;
+}
+
+.dust-particle {
+  position: absolute;
+  color: #ffe699;
+  font-size: 0.9rem;
+  text-shadow: 0 0 8px rgba(255, 230, 150, 0.9), 0 0 15px rgba(229, 202, 114, 0.6);
+  opacity: 0;
+  user-select: none;
+}
+
+.dust-1 {
+  animation: dustDrift1 1.6s ease-out infinite;
+}
+
+.dust-2 {
+  animation: dustDrift2 1.9s ease-out 0.4s infinite;
+}
+
+.dust-3 {
+  animation: dustDrift3 1.7s ease-out 0.8s infinite;
+}
+
+@keyframes dustDrift1 {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) scale(0.4) rotate(0deg);
+  }
+  20% {
+    opacity: 1;
+    transform: translate(-15px, -15px) scale(1) rotate(45deg);
+  }
+  80% {
+    opacity: 0.6;
+    transform: translate(-38px, 10px) scale(0.7) rotate(90deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-55px, 25px) scale(0.2) rotate(140deg);
+  }
+}
+
+@keyframes dustDrift2 {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) scale(0.5) rotate(0deg);
+  }
+  25% {
+    opacity: 0.95;
+    transform: translate(18px, -18px) scale(1.1) rotate(-35deg);
+  }
+  80% {
+    opacity: 0.5;
+    transform: translate(32px, 8px) scale(0.6) rotate(-80deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(45px, 20px) scale(0.2) rotate(-120deg);
+  }
+}
+
+@keyframes dustDrift3 {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) scale(0.4);
+  }
+  30% {
+    opacity: 1;
+    transform: translate(-5px, -24px) scale(1);
+  }
+  85% {
+    opacity: 0.4;
+    transform: translate(-12px, -35px) scale(0.5);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-18px, -45px) scale(0.1);
+  }
+}
+
+/* Oval Spotlight pool on the stage floor */
+.stage-floor-spotlight {
+  width: 12.5rem;
+  height: 2.2rem;
+  background: radial-gradient(ellipse at center, rgba(255, 245, 190, 0.75) 0%, rgba(229, 202, 114, 0.3) 50%, transparent 75%);
+  border-radius: 50%;
+  margin-top: -1.1rem;
+  filter: blur(4px);
+  z-index: 5;
+  transition: transform 0.2s ease;
+  animation: spotlightGroundPulse 2.2s ease-in-out infinite alternate;
+}
+
+.stage-floor-spotlight.dance-leap {
+  animation: spotlightLeapPulse 1.4s cubic-bezier(0.25, 0.7, 0.25, 1) infinite;
+}
+
+@keyframes spotlightGroundPulse {
+  0% { transform: scale(0.95, 0.95); opacity: 0.75; }
+  50% { transform: scale(1.08, 1.05); opacity: 0.95; }
+  100% { transform: scale(0.95, 0.95); opacity: 0.75; }
+}
+
+@keyframes spotlightLeapPulse {
+  0% { transform: scale(1, 1); opacity: 0.9; }
+  50% { transform: scale(0.7, 0.7); opacity: 0.45; }
+  100% { transform: scale(1, 1); opacity: 0.9; }
+}
+
+.ballet-value-tag {
+  margin-top: 0.35rem;
+  padding: 0.35rem 1.25rem;
+  background: linear-gradient(135deg, rgba(25, 20, 32, 0.95), rgba(65, 18, 35, 0.95));
+  border-radius: 9999px;
+  font-size: 1rem;
+  font-weight: 900;
+  color: var(--ballet-gold);
+  border: 1.5px solid rgba(229, 202, 114, 0.8);
+  z-index: 10;
+  letter-spacing: 0.05em;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.7), 0 0 18px rgba(229, 202, 114, 0.4);
+  animation: valueTagFloat 2.2s ease-in-out infinite alternate;
+}
+
+@keyframes valueTagFloat {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+  100% { transform: translateY(0); }
+}
+
+.ballet-bravo-alert {
+  background: linear-gradient(135deg, var(--ballet-gold), var(--ballet-rose));
+  color: #1a080c;
+  box-shadow: 0 0 25px rgba(229, 202, 114, 0.6);
+}
+
+.ballet-typing-area {
+  background-color: #12141f;
+  border-top: 1px solid rgba(229, 202, 114, 0.1);
+}
+
+.ballet-category-tag {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--ballet-rose);
+  padding: 0.2rem 0.8rem;
+  background-color: rgba(230, 165, 176, 0.12);
+  border-radius: 9999px;
+  margin-bottom: 0.5rem;
+  border: 1px solid rgba(230, 165, 176, 0.25);
+  letter-spacing: 0.05em;
+}
+
+.ballet-term-main {
+  color: #fdfaf6;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+}
+
+.ballet-term-sub {
+  color: var(--ballet-rose);
+}
+
+.ballet-romaji-box {
+  background-color: #0b0c14;
+  border: 1px solid rgba(229, 202, 114, 0.2);
+  box-shadow: inset 0 2px 12px rgba(0,0,0,0.7);
+}
+
+.ballet-typed {
+  color: var(--ballet-gold);
+}
+
+.ballet-remaining {
+  color: #ffffff;
+  border-bottom-color: var(--ballet-rose);
+}
+
+.ballet-footer {
+  background-color: #0d0f17;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Curtain Call & Results */
+.ballet-result-container {
+  background-color: #151825;
+  border: 1px solid rgba(229, 202, 114, 0.2);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.7);
+}
+
+.ballet-box {
+  background-color: #0e101a;
+  border-color: rgba(229, 202, 114, 0.12);
+}
+
+.ballet-rank-banner {
+  background: radial-gradient(circle at 50% 50%, rgba(74, 14, 28, 0.3) 0%, rgba(21, 24, 37, 0.4) 100%);
+  border-color: rgba(229, 202, 114, 0.25);
+}
+
+.ballet-acc-bar {
+  background: linear-gradient(to right, var(--ballet-burgundy-light), var(--ballet-gold));
+}
+
+.ballet-btn-accent {
+  background: linear-gradient(135deg, var(--ballet-gold), var(--ballet-gold-light));
+  color: #1a080c;
+  font-weight: 700;
+}
+
+.ballet-btn-secondary {
+  border-color: rgba(229, 202, 114, 0.3);
+  color: #fff;
+}
+
+.point-add-popup {
+  position: absolute;
+  top: 18%;
+  font-size: 2.2rem;
+  font-weight: 900;
+  color: var(--ballet-gold);
+  text-shadow: 0 0 20px rgba(229, 202, 114, 0.8), 0 0 40px rgba(229, 202, 114, 0.5);
+  animation: floatUpPoint 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  z-index: 30;
+  pointer-events: none;
+  background: rgba(15, 17, 26, 0.8);
+  padding: 0.4rem 1.5rem;
+  border-radius: 9999px;
+  border: 2px solid var(--ballet-gold);
+  box-shadow: 0 0 30px rgba(229, 202, 114, 0.6);
+}
+
+@keyframes floatUpPoint {
+  0% { transform: translateY(10px) scale(0.7); opacity: 0; }
+  25% { transform: translateY(0) scale(1.18); opacity: 1; }
+  100% { transform: translateY(-45px) scale(1); opacity: 0; }
+}
+
+/* ========================================================= */
+/* --- GRAND THEATER LUXURY & COLORFUL VIBRANT STYLES --- */
+/* ========================================================= */
+
+.grand-theater-bg {
+  position: relative;
+  background: radial-gradient(circle at 50% 15%, #2a0b16 0%, #170914 45%, #0d0c18 80%, #08070e 100%);
+  overflow-x: hidden;
+}
+
+/* Velvet Grand Stage Drapery (Top Curtains with Golden Fringe) */
+.grand-curtain-drape-top {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 50px;
+  background: 
+    radial-gradient(ellipse at 50% 0%, #9e1b32 0%, #5e0d1d 70%, transparent 100%),
+    repeating-linear-gradient(90deg, #7a1224 0px, #4a0914 30px, #8c162a 60px);
+  border-bottom: 3px solid #f3de9a;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.9), 0 0 15px rgba(243, 222, 154, 0.5);
+  z-index: 20;
+}
+
+/* Side Velvet Curtains (Left & Right framing the opera hall) */
+.grand-curtain-side-left,
+.grand-curtain-side-right {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 30px;
+  background: linear-gradient(90deg, #420812 0%, #731223 50%, #30060d 100%);
+  opacity: 0.85;
+  z-index: 15;
+  pointer-events: none;
+  box-shadow: 5px 0 25px rgba(0, 0, 0, 0.8);
+}
+.grand-curtain-side-left { left: 0; border-right: 1px solid rgba(243, 222, 154, 0.3); }
+.grand-curtain-side-right { right: 0; border-left: 1px solid rgba(243, 222, 154, 0.3); }
+
+@media (min-width: 768px) {
+  .grand-curtain-drape-top { height: 60px; }
+  .grand-curtain-side-left, .grand-curtain-side-right { width: 60px; }
+}
+
+/* Glowing Aurora & Chandelier Lights */
+.bg-glow-emerald {
+  position: absolute;
+  top: 25%;
+  left: -5%;
+  width: 35vw;
+  height: 35vw;
+  border-radius: 50%;
+  background-color: #0d9488;
+  opacity: 0.12;
+  filter: blur(130px);
+  pointer-events: none;
+}
+
+.bg-glow-rose {
+  position: absolute;
+  top: 15%;
+  right: -5%;
+  width: 40vw;
+  height: 40vw;
+  border-radius: 50%;
+  background-color: #e11d48;
+  opacity: 0.15;
+  filter: blur(140px);
+  pointer-events: none;
+}
+
+.bg-glow-sapphire {
+  position: absolute;
+  bottom: 5%;
+  left: 30%;
+  width: 40vw;
+  height: 30vw;
+  border-radius: 50%;
+  background-color: #3b82f6;
+  opacity: 0.1;
+  filter: blur(140px);
+  pointer-events: none;
+}
+
+/* ========================================================= */
+/* --- GRAND CHANDELIER & OPULENT THEATER TYPOGRAPHY --- */
+/* ========================================================= */
+
+.grand-chandelier-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: -1.5rem auto -0.25rem auto;
+  z-index: 12;
+  pointer-events: none;
+}
+
+.chandelier-ambient-glow {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 22rem;
+  height: 12rem;
+  background: radial-gradient(ellipse at center, rgba(254, 240, 138, 0.28) 0%, rgba(245, 158, 11, 0.12) 50%, transparent 75%);
+  filter: blur(35px);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.grand-chandelier-svg {
+  filter: drop-shadow(0 8px 25px rgba(0, 0, 0, 0.6)) drop-shadow(0 0 35px rgba(250, 204, 21, 0.35));
+  animation: chandelierSway 7s ease-in-out infinite alternate;
+  transform-origin: 50% 0%;
+  max-width: 92vw;
+  height: auto;
+}
+
+@keyframes chandelierSway {
+  0% { transform: rotate(-0.6deg) scale(1); filter: drop-shadow(0 8px 25px rgba(0, 0, 0, 0.6)) drop-shadow(0 0 30px rgba(250, 204, 21, 0.3)); }
+  50% { transform: rotate(0.4deg) scale(1.01); filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.7)) drop-shadow(0 0 45px rgba(250, 204, 21, 0.45)); }
+  100% { transform: rotate(-0.6deg) scale(1); filter: drop-shadow(0 8px 25px rgba(0, 0, 0, 0.6)) drop-shadow(0 0 30px rgba(250, 204, 21, 0.3)); }
+}
+
+/* Candle flame subtle flicker animations */
+.flame-flicker-1 {
+  animation: flamePulse 2.1s ease-in-out infinite alternate;
+  transform-origin: center;
+}
+.flame-flicker-2 {
+  animation: flamePulse 2.8s ease-in-out 0.4s infinite alternate;
+  transform-origin: center;
+}
+.flame-flicker-3 {
+  animation: flamePulse 1.9s ease-in-out 0.9s infinite alternate;
+  transform-origin: center;
+}
+
+@keyframes flamePulse {
+  0% { opacity: 0.85; transform: scale(0.96); }
+  50% { opacity: 1; transform: scale(1.06); }
+  100% { opacity: 0.9; transform: scale(1); }
+}
+
+/* Faceted Crystal Shimmers */
+.crystal-shimmer-1 {
+  animation: crystalGlint 3.2s ease-in-out infinite;
+}
+.crystal-shimmer-2 {
+  animation: crystalGlint 3.8s ease-in-out 1.2s infinite;
+}
+.crystal-shimmer-3 {
+  animation: crystalGlint 4.4s ease-in-out 2.1s infinite;
+}
+
+@keyframes crystalGlint {
+  0%, 100% { opacity: 0.8; filter: drop-shadow(0 0 0px transparent); }
+  50% { opacity: 1; filter: drop-shadow(0 0 6px #ffffff) drop-shadow(0 0 10px #93c5fd); }
+}
+
+/* ========================================================= */
+/* --- ROYAL THEATER ELEGANT TYPOGRAPHY (COMPACT HERO) --- */
+/* ========================================================= */
+
+.theater-header-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  z-index: 10;
+  margin-bottom: 0.5rem !important;
+}
+
+/* Pre-title Royal Crest & Banner */
+.theater-pre-title {
+  font-family: var(--font-playfair);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: #fce79a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 0.2rem;
+  text-shadow: 0 0 10px rgba(250, 204, 21, 0.4);
+}
+
+.theater-pre-crest {
+  color: #eab308;
+  font-size: 0.8rem;
+}
+
+/* Grand English Hero Title (Cinzel Decorative) */
+.grand-title-en {
+  font-family: var(--font-cinzel);
+  font-size: 2.2rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  line-height: 1.05;
+  margin: 0;
+  background: linear-gradient(135deg, #ffffff 0%, #fff7d6 20%, #fde047 50%, #eab308 75%, #ca8a04 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 3px 18px rgba(234, 179, 8, 0.55)) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.8));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.25rem 0.6rem;
+  text-transform: uppercase;
+}
+
+@media (min-width: 640px) {
+  .grand-title-en {
+    font-size: 3.15rem;
+    letter-spacing: 0.1em;
+  }
+}
+
+.title-gold-star {
+  font-size: 0.55em;
+  color: #fde047;
+  -webkit-text-fill-color: #fde047;
+  filter: drop-shadow(0 0 8px #facc15);
+  display: inline-block;
+}
+
+/* Harmonized Japanese Title Badge / Subtitle */
+.theater-jp-title-line {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  margin-top: 0.15rem;
+  margin-bottom: 0.25rem;
+}
+
+.theater-jp-line-decor {
+  height: 1px;
+  width: 2rem;
+  background: linear-gradient(to right, transparent, rgba(234, 179, 8, 0.7), transparent);
+}
+
+.theater-jp-title {
+  font-size: 1.15rem;
+  font-weight: 900;
+  letter-spacing: 0.18em;
+  color: #ffffff;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8), 0 0 16px rgba(244, 63, 94, 0.4);
+}
+
+@media (min-width: 640px) {
+  .theater-jp-title {
+    font-size: 1.45rem;
+  }
+  .theater-jp-line-decor {
+    width: 3.5rem;
+  }
+}
+
+/* Elegant Cursive / Serif Subtitle */
+.grand-subtitle {
+  font-family: var(--font-playfair);
+  font-style: italic;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: #fda4af;
+  margin-bottom: 0.4rem;
+  text-shadow: 0 0 12px rgba(244, 63, 94, 0.75);
+}
+
+@media (min-width: 640px) {
+  .grand-subtitle {
+    font-size: 1.05rem;
+  }
+}
+
+
+/* Colorful Distinctive Seat Cards */
+
+/* B-Tier: Emerald Sylphide */
+.seat-card-b {
+  background: linear-gradient(160deg, #112623 0%, #0d1a1b 60%, #0a1315 100%) !important;
+  border: 1.5px solid rgba(45, 212, 191, 0.35) !important;
+  box-shadow: 0 8px 25px rgba(13, 148, 136, 0.2);
+}
+.seat-card-b:hover, .seat-card-b.selected {
+  border-color: #2dd4bf !important;
+  box-shadow: 0 12px 35px rgba(45, 212, 191, 0.45) !important;
+}
+.seat-card-b.selected::before {
+  background: linear-gradient(90deg, #2dd4bf, #99f6e4) !important;
+}
+.tag-emerald {
+  color: #2dd4bf !important;
+  font-weight: 800;
+}
+.badge-emerald {
+  background: rgba(45, 212, 191, 0.15);
+  border: 1px solid rgba(45, 212, 191, 0.4);
+  color: #5eead4;
+}
+
+/* A-Tier: Royal Ruby Rose */
+.seat-card-a {
+  background: linear-gradient(160deg, #330f1c 0%, #200913 60%, #15060d 100%) !important;
+  border: 1.5px solid rgba(251, 113, 133, 0.45) !important;
+  box-shadow: 0 8px 25px rgba(225, 29, 72, 0.25);
+}
+.seat-card-a:hover, .seat-card-a.selected {
+  border-color: #fb7185 !important;
+  box-shadow: 0 14px 40px rgba(251, 113, 133, 0.55) !important;
+}
+.seat-card-a.selected::before {
+  background: linear-gradient(90deg, #fb7185, #f43f5e) !important;
+}
+.tag-rose {
+  color: #fda4af !important;
+  font-weight: 800;
+}
+.badge-rose {
+  background: linear-gradient(135deg, #f43f5e, #fda4af) !important;
+  color: #200308 !important;
+  font-weight: 900;
+  box-shadow: 0 0 18px rgba(244, 63, 94, 0.7);
+}
+
+/* S-Tier: Imperial Sapphire & Gold Gala */
+.seat-card-s {
+  background: linear-gradient(160deg, #181938 0%, #151128 60%, #0d0c1a 100%) !important;
+  border: 1.5px solid rgba(234, 179, 8, 0.5) !important;
+  box-shadow: 0 8px 25px rgba(99, 102, 241, 0.25), 0 0 20px rgba(234, 179, 8, 0.3);
+}
+.seat-card-s:hover, .seat-card-s.selected {
+  border-color: #facc15 !important;
+  box-shadow: 0 15px 45px rgba(234, 179, 8, 0.6), 0 0 30px rgba(99, 102, 241, 0.5) !important;
+}
+.seat-card-s.selected::before {
+  background: linear-gradient(90deg, #facc15, #818cf8, #facc15) !important;
+}
+.tag-sapphire {
+  color: #93c5fd !important;
+  font-weight: 800;
+}
+
+/* Grand Start Action Button */
+.grand-start-btn {
+  position: relative;
+  overflow: hidden;
+  padding: 0.85rem 2.75rem !important;
+  font-size: 1.12rem !important;
+  font-weight: 900 !important;
+  letter-spacing: 0.08em;
+  background: linear-gradient(135deg, #991b1b 0%, #dc2626 50%, #b91c1c 100%) !important;
+  color: #fff !important;
+  border: 2px solid #fde047 !important;
+  border-radius: 9999px !important;
+  box-shadow: 0 0 25px rgba(220, 38, 38, 0.6), 0 0 16px rgba(253, 224, 71, 0.5) !important;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.grand-start-btn:hover {
+  transform: translateY(-3px) scale(1.03) !important;
+  box-shadow: 0 0 45px rgba(220, 38, 38, 0.9), 0 0 30px rgba(253, 224, 71, 0.9) !important;
+  background: linear-gradient(135deg, #b91c1c 0%, #ef4444 50%, #dc2626 100%) !important;
+}
+
+.grand-start-btn:active {
+  transform: translateY(0) scale(0.98) !important;
+}
+
+.floating-sparkle {
+  display: inline-block;
+  animation: sparkleRotate 4s infinite linear;
+}
+
+@keyframes sparkleRotate {
+  0% { transform: rotate(0deg) scale(1); }
+  50% { transform: rotate(180deg) scale(1.25); }
+  100% { transform: rotate(360deg) scale(1); }
+}
+
+/* ========================================================= */
+/* --- GAME ELEMENT EXPANSION: SPEED / PERFECT / COMBO ---  */
+/* ========================================================= */
+
+/* --- Timer bar heat states --- */
+.timer-bar-inner.heat-mid {
+  background: linear-gradient(to right, var(--ballet-rose), #ff9c40, var(--ballet-gold));
+  animation: timerHeatPulse 1.5s ease-in-out infinite alternate;
+}
+
+.timer-bar-inner.grandprix {
+  background: linear-gradient(to right, #f7c03e, #ffeaa0, #f7c03e, #e5ca72, #fff0b0);
+  background-size: 200% 100%;
+  animation: grandprixBar 1s linear infinite;
+  box-shadow: 0 0 10px rgba(255, 220, 60, 0.7);
+}
+
+@keyframes timerHeatPulse {
+  0% { opacity: 0.85; }
+  100% { opacity: 1; filter: brightness(1.15); }
+}
+
+@keyframes grandprixBar {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+/* --- Grand Prix mode: container-level gold glow --- */
+.grand-prix-mode .ballet-stage-section {
+  background: radial-gradient(circle at 50% 120%, #2a1800 0%, #1a1200 40%, #0f111a 80%) !important;
+  box-shadow: inset 0 0 60px rgba(255, 210, 50, 0.08);
+}
+
+.grand-prix-mode .stage-floor-track {
+  border-top-color: rgba(255, 210, 50, 0.7) !important;
+  border-bottom-color: rgba(255, 210, 50, 0.9) !important;
+}
+
+/* --- Combo box: Grand Prix state --- */
+.combo-grandprix {
+  background: linear-gradient(135deg, rgba(255, 210, 50, 0.18), rgba(229, 202, 114, 0.12)) !important;
+  border-color: rgba(255, 210, 50, 0.55) !important;
+  box-shadow: 0 0 18px rgba(255, 210, 50, 0.35);
+  animation: grandprixGlow 1.2s ease-in-out infinite alternate;
+}
+
+@keyframes grandprixGlow {
+  0% { box-shadow: 0 0 10px rgba(255, 210, 50, 0.2); }
+  100% { box-shadow: 0 0 28px rgba(255, 210, 50, 0.55); }
+}
+
+/* --- Perfect streak label inside combo box --- */
+.perfect-streak-label {
+  font-size: 0.55rem;
+  color: var(--ballet-rose);
+  letter-spacing: 0.04em;
+  font-weight: 700;
+  margin-top: 0.15rem;
+}
+
+/* --- Bouquet / Petal rain effect --- */
+.bouquet-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 40;
+  overflow: hidden;
+}
+
+.bouquet-petal {
+  position: absolute;
+  top: -10%;
+  font-size: 2.2rem;
+  animation: petalFall 1.5s cubic-bezier(0.33, 0.6, 0.66, 1) forwards;
+  opacity: 0;
+}
+
+.petal-1 { left: 15%; animation-delay: 0s;    animation-duration: 1.3s; }
+.petal-2 { left: 30%; animation-delay: 0.1s;  animation-duration: 1.5s; }
+.petal-3 { left: 50%; animation-delay: 0.05s; animation-duration: 1.4s; }
+.petal-4 { left: 70%; animation-delay: 0.15s; animation-duration: 1.6s; }
+.petal-5 { left: 85%; animation-delay: 0.08s; animation-duration: 1.3s; }
+
+@keyframes petalFall {
+  0%   { top: -8%; opacity: 0; transform: rotate(-15deg) scale(0.6); }
+  15%  { opacity: 1; }
+  70%  { opacity: 0.9; transform: rotate(20deg) scale(1.1); }
+  100% { top: 95%; opacity: 0; transform: rotate(35deg) scale(0.9); }
+}
+
+/* --- Stats grid: 7 items, wrap nicely --- */
+@media (min-width: 640px) {
+  .stats-grid {
+    grid-template-columns: repeat(4, 1fr) !important;
+  }
+}
