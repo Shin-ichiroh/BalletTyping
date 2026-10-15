@@ -81,7 +81,17 @@ export function getBalletIcon(word: BalletWord | null): string {
 export interface RealisticDancerInfo {
   imageName: string;
   altText: string;
-  characterType: "odette" | "odile" | "kitri" | "aurora" | "prince";
+  characterType:
+    | "odette"
+    | "odile"
+    | "kitri"
+    | "aurora"
+    | "prince"
+    | "giselle"
+    | "bluebird"
+    | "sugarplum"
+    | "nikia"
+    | "firebird";
 }
 
 export function getRealisticDancer(word: BalletWord | null): RealisticDancerInfo {
@@ -93,9 +103,55 @@ export function getRealisticDancer(word: BalletWord | null): RealisticDancerInfo
     };
   }
   const kanji = word.kanji;
+  const cat = word.category || "";
 
-  // 1. Black Swan Odile
-  if (kanji.includes("オディール") || kanji.includes("黒鳥") || kanji.includes("ロットバルト") || kanji.includes("カラボス") || kanji.includes("悪魔")) {
+  // 1. 🔥 火の鳥 (The Firebird)
+  if (kanji.includes("火の鳥") || kanji.includes("カシチェイ") || kanji.includes("不死鳥") || kanji.includes("イワン")) {
+    return {
+      imageName: "firebird.jpg",
+      altText: "火の鳥",
+      characterType: "firebird",
+    };
+  }
+
+  // 2. 🛕 ラ・バヤデール / 寺院の舞姫 (La Bayadère - Nikiya & Gamzatti)
+  if (kanji.includes("バヤデール") || kanji.includes("ニキヤ") || kanji.includes("寺院") || kanji.includes("影の王国") || kanji.includes("ガムザッティ") || kanji.includes("神像") || kanji.includes("ブラフマン")) {
+    return {
+      imageName: "nikia.jpg",
+      altText: "舞姫ニキヤ",
+      characterType: "nikia",
+    };
+  }
+
+  // 3. 🍬 くるみ割り人形 / お菓子の国 (The Nutcracker - Sugar Plum Fairy)
+  if (kanji.includes("金平糖") || kanji.includes("くるみ割り") || kanji.includes("お菓子の国") || kanji.includes("クララ") || kanji.includes("ドロッセルマイヤー") || kanji.includes("クリスマス") || kanji.includes("葦笛") || kanji.includes("トレパック")) {
+    return {
+      imageName: "sugarplum.jpg",
+      altText: "金平糖の精",
+      characterType: "sugarplum",
+    };
+  }
+
+  // 4. 🐦 青い鳥 / 跳躍男性ソリスト (Bluebird & Allegro Jumpers)
+  if (kanji.includes("青い鳥") || kanji.includes("鳥") || kanji.includes("ジュテ") || kanji.includes("カブリオール") || kanji.includes("ブリゼ") || kanji.includes("アントルシャ") || kanji.includes("パディシャ") || kanji.includes("跳躍")) {
+    return {
+      imageName: "bluebird.jpg",
+      altText: "青い鳥 (ブルーバード)",
+      characterType: "bluebird",
+    };
+  }
+
+  // 5. 🧚 ジゼル / ウィリ / ロマンティック・チュチュ (Giselle & Sylphide)
+  if (kanji.includes("ジゼル") || kanji.includes("ウィリ") || kanji.includes("ミルタ") || kanji.includes("シルフィード") || kanji.includes("ロマンティック") || kanji.includes("墓場") || kanji.includes("深夜") || kanji.includes("収穫祭") || kanji.includes("ヒラリオン") || kanji.includes("ペザント")) {
+    return {
+      imageName: "giselle.jpg",
+      altText: "ジゼル (ウィリ)",
+      characterType: "giselle",
+    };
+  }
+
+  // 6. 🦅 黒鳥オディール / 悪魔・ドラマチック (Black Swan Odile & Rothbart)
+  if (kanji.includes("オディール") || kanji.includes("黒鳥") || kanji.includes("ロットバルト") || kanji.includes("カラボス") || kanji.includes("悪魔") || kanji.includes("フェッテ")) {
     return {
       imageName: "odile.jpg",
       altText: "黒鳥オディール",
@@ -103,8 +159,8 @@ export function getRealisticDancer(word: BalletWord | null): RealisticDancerInfo
     };
   }
 
-  // 2. Spanish / Kitri / Carmen
-  if (kanji.includes("キトリ") || kanji.includes("ドン・キホーテ") || kanji.includes("バジル") || kanji.includes("扇子") || kanji.includes("カルメン") || kanji.includes("エスパーダ") || kanji.includes("メルセデス") || kanji.includes("エスメラルダ") || kanji.includes("サタネラ")) {
+  // 7. 💃 スペイン・情熱系 (Don Quixote, Kitri, Carmen, Esmeralda)
+  if (kanji.includes("キトリ") || kanji.includes("ドン・キホーテ") || kanji.includes("バジル") || kanji.includes("扇子") || kanji.includes("カルメン") || kanji.includes("エスパーダ") || kanji.includes("メルセデス") || kanji.includes("エスメラルダ") || kanji.includes("サタネラ") || kanji.includes("闘牛士")) {
     return {
       imageName: "kitri.jpg",
       altText: "キトリ (ドン・キホーテ)",
@@ -112,8 +168,8 @@ export function getRealisticDancer(word: BalletWord | null): RealisticDancerInfo
     };
   }
 
-  // 3. Male Lead / Prince / Grand Allegro jumps
-  if (kanji.includes("ジークフリート") || kanji.includes("デジレ") || kanji.includes("アルブレヒト") || kanji.includes("王子") || kanji.includes("ソロル") || kanji.includes("コンラッド") || kanji.includes("アリ") || kanji.includes("ジャン・ド・ブリエンヌ") || kanji.includes("フランツ") || kanji.includes("ジェームズ") || kanji.includes("決闘") || kanji.includes("海賊") || kanji.includes("カブリオール") || kanji.includes("アントルシャ") || kanji.includes("パ・ド・ドゥ")) {
+  // 8. 🤴 王子・騎士・男性主役 (Princes, Danseur Noble & Pirates)
+  if (kanji.includes("ジークフリート") || kanji.includes("デジレ") || kanji.includes("アルブレヒト") || kanji.includes("王子") || kanji.includes("ソロル") || kanji.includes("コンラッド") || kanji.includes("アリ") || kanji.includes("ジャン・ド・ブリエンヌ") || kanji.includes("フランツ") || kanji.includes("ジェームズ") || kanji.includes("海賊") || kanji.includes("ロミオ") || kanji.includes("決闘") || kanji.includes("パ・ド・ドゥ")) {
     return {
       imageName: "prince.jpg",
       altText: "王子・プリンシパル",
@@ -121,8 +177,8 @@ export function getRealisticDancer(word: BalletWord | null): RealisticDancerInfo
     };
   }
 
-  // 4. Classical Princess / Aurora / Clara / Coppelia / Fairy
-  if (kanji.includes("オーロラ") || kanji.includes("フロリナ") || kanji.includes("金平糖") || kanji.includes("クララ") || kanji.includes("スワニルダ") || kanji.includes("シンデレラ") || kanji.includes("リラの精") || kanji.includes("コッペリア") || kanji.includes("ライモンダ") || kanji.includes("ティアラ") || kanji.includes("チュチュ") || kanji.includes("ワルツ")) {
+  // 9. 👸 クラシカル・プリンセス (Sleeping Beauty Aurora, Cinderella, Coppelia)
+  if (kanji.includes("オーロラ") || kanji.includes("フロリナ") || kanji.includes("スワニルダ") || kanji.includes("シンデレラ") || kanji.includes("リラの精") || kanji.includes("コッペリア") || kanji.includes("ライモンダ") || kanji.includes("ティアラ") || kanji.includes("パキータ") || kanji.includes("タリスマン") || kanji.includes("ダイアナ") || kanji.includes("グラン・パ・クラシック")) {
     return {
       imageName: "aurora.jpg",
       altText: "オーロラ姫",
@@ -130,12 +186,31 @@ export function getRealisticDancer(word: BalletWord | null): RealisticDancerInfo
     };
   }
 
-  // 5. Swan Lake / Odette / Pure Classical White (Default)
-  return {
-    imageName: "odette.jpg",
-    altText: "白鳥オデット",
-    characterType: "odette",
-  };
+  // 10. 🦢 白鳥の湖 / オデット (Swan Lake Odette & Default Pure Classical)
+  // メイクやステップ、基本用語なども白鳥の優雅なクラシカルスタイルで表示
+  if (kanji.includes("オデット") || kanji.includes("白鳥") || kanji.includes("湖畔") || kanji.includes("アダージョ") || cat === "ステップ" || cat === "メイク" || cat === "ヘア") {
+    return {
+      imageName: "odette.jpg",
+      altText: "白鳥オデット",
+      characterType: "odette",
+    };
+  }
+
+  // ハッシュ分散フォールバック（同キャラクターばかり続かないよう、文字コードから決定）
+  const charSum = kanji.split("").reduce((acc, c) => acc + c.charCodeAt(0), 0);
+  const pool: RealisticDancerInfo[] = [
+    { imageName: "odette.jpg", altText: "白鳥オデット", characterType: "odette" },
+    { imageName: "kitri.jpg", altText: "キトリ", characterType: "kitri" },
+    { imageName: "aurora.jpg", altText: "オーロラ姫", characterType: "aurora" },
+    { imageName: "sugarplum.jpg", altText: "金平糖の精", characterType: "sugarplum" },
+    { imageName: "giselle.jpg", altText: "ジゼル", characterType: "giselle" },
+    { imageName: "nikia.jpg", altText: "舞姫ニキヤ", characterType: "nikia" },
+    { imageName: "firebird.jpg", altText: "火の鳥", characterType: "firebird" },
+    { imageName: "bluebird.jpg", altText: "青い鳥", characterType: "bluebird" },
+    { imageName: "prince.jpg", altText: "王子", characterType: "prince" },
+    { imageName: "odile.jpg", altText: "黒鳥オディール", characterType: "odile" },
+  ];
+  return pool[charSum % pool.length];
 }
 
 export function getBalletMotionType(word: BalletWord | null): string {
