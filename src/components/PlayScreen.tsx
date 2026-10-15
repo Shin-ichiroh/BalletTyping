@@ -377,7 +377,7 @@ export default function PlayScreen({ seatTier, onGameEnd, onBackToMenu }: PlaySc
           setCombo(nextCombo);
 
           // ──────────────────────────────────────────────
-          // 🎯 パーフェクト連続ボーナス
+          // 🎯 パーフェクト連続ボーナス（毎問加算は廃止、3問連続時のみ +1秒）
           // ──────────────────────────────────────────────
           let timeBonusTotal = 0;
           let bravoMsg = "";
@@ -390,20 +390,16 @@ export default function PlayScreen({ seatTier, onGameEnd, onBackToMenu }: PlaySc
             }
             setPerfectComboCount(nextPerfect);
 
-            // パーフェクト毎に +1秒
-            timeBonusTotal += 1;
-
-            // パーフェクト連続3問で +2秒追加
+            // パーフェクト連続3問ごとに +1秒
             if (nextPerfect % 3 === 0) {
-              timeBonusTotal += 2;
-              bravoMsg = `パーフェクト${nextPerfect}連！ +${timeBonusTotal}秒`;
+              timeBonusTotal += 1;
+              bravoMsg = `パーフェクト${nextPerfect}連！ +1秒`;
               playPerfectSound();
 
               // 花束エフェクト（3連・6連・9連...）
               setBouquetEffect(true);
               setTimeout(() => setBouquetEffect(false), 1500);
             } else {
-              bravoMsg = `パーフェクト！ +1秒`;
               playPerfectSound();
             }
           } else {
@@ -412,21 +408,21 @@ export default function PlayScreen({ seatTier, onGameEnd, onBackToMenu }: PlaySc
           }
 
           // ──────────────────────────────────────────────
-          // ⚡ スピードクリアボーナス
+          // ⚡ スピードクリアボーナス（+1秒、3連時も追加+1秒のみ）
           // ──────────────────────────────────────────────
           if (isSpeedClear) {
             speedClearsRef.current += 1;
             speedClearStreakRef.current += 1;
-            timeBonusTotal += 2; // スピードクリア +2秒
+            timeBonusTotal += 1; // スピードクリア +1秒
 
             if (speedClearStreakRef.current >= 3) {
-              // 3連続スピードクリアで +5秒追加
-              timeBonusTotal += 5;
+              // 3連続スピードクリアで さらに +1秒
+              timeBonusTotal += 1;
               bravoMsg = `ヴィルトゥオーゾ3連！ +${timeBonusTotal}秒`;
               playSpeedClearSound();
               speedClearStreakRef.current = 0;
             } else {
-              const speedMsg = `ヴィルトゥオーゾ！ +${timeBonusTotal}秒`;
+              const speedMsg = `ヴィルトゥオーゾ！ +1秒`;
               bravoMsg = bravoMsg ? `${bravoMsg} / ${speedMsg}` : speedMsg;
               playSpeedClearSound();
             }
@@ -435,18 +431,17 @@ export default function PlayScreen({ seatTier, onGameEnd, onBackToMenu }: PlaySc
           }
 
           // ──────────────────────────────────────────────
-          // 🔥 コンボ5の倍数ブラボーボーナス（既存システム）
+          // 🔥 コンボ5の倍数ブラボーボーナス（5コンボごとに +1秒固定）
           // ──────────────────────────────────────────────
           if (isPerfect && nextCombo > 0 && nextCombo % 5 === 0) {
-            const comboBonus = Math.min(5, Math.floor(nextCombo / 5) + 1);
-            timeBonusTotal += comboBonus;
+            timeBonusTotal += 1;
             bravoMsg = `ブラボー！コンボ${nextCombo}！ +${timeBonusTotal}秒`;
             playBonusSound();
           }
 
-          // 時間加算（上限: seatTier.timeLimit + 60）
+          // 時間加算（上限: コース初期制限時間 seatTier.timeLimit まで。無限増殖を防止）
           if (timeBonusTotal > 0) {
-            setTimeLeft(t => Math.min(seatTier.timeLimit + 60, t + timeBonusTotal));
+            setTimeLeft(t => Math.min(seatTier.timeLimit, t + timeBonusTotal));
             showBravoEffect(bravoMsg);
           }
 
