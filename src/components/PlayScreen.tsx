@@ -78,6 +78,66 @@ export function getBalletIcon(word: BalletWord | null): string {
   return "🩰";
 }
 
+export interface RealisticDancerInfo {
+  imageName: string;
+  altText: string;
+  characterType: "odette" | "odile" | "kitri" | "aurora" | "prince";
+}
+
+export function getRealisticDancer(word: BalletWord | null): RealisticDancerInfo {
+  if (!word) {
+    return {
+      imageName: "odette.jpg",
+      altText: "白鳥オデット",
+      characterType: "odette",
+    };
+  }
+  const kanji = word.kanji;
+
+  // 1. Black Swan Odile
+  if (kanji.includes("オディール") || kanji.includes("黒鳥") || kanji.includes("ロットバルト") || kanji.includes("カラボス") || kanji.includes("悪魔")) {
+    return {
+      imageName: "odile.jpg",
+      altText: "黒鳥オディール",
+      characterType: "odile",
+    };
+  }
+
+  // 2. Spanish / Kitri / Carmen
+  if (kanji.includes("キトリ") || kanji.includes("ドン・キホーテ") || kanji.includes("バジル") || kanji.includes("扇子") || kanji.includes("カルメン") || kanji.includes("エスパーダ") || kanji.includes("メルセデス") || kanji.includes("エスメラルダ") || kanji.includes("サタネラ")) {
+    return {
+      imageName: "kitri.jpg",
+      altText: "キトリ (ドン・キホーテ)",
+      characterType: "kitri",
+    };
+  }
+
+  // 3. Male Lead / Prince / Grand Allegro jumps
+  if (kanji.includes("ジークフリート") || kanji.includes("デジレ") || kanji.includes("アルブレヒト") || kanji.includes("王子") || kanji.includes("ソロル") || kanji.includes("コンラッド") || kanji.includes("アリ") || kanji.includes("ジャン・ド・ブリエンヌ") || kanji.includes("フランツ") || kanji.includes("ジェームズ") || kanji.includes("決闘") || kanji.includes("海賊") || kanji.includes("カブリオール") || kanji.includes("アントルシャ") || kanji.includes("パ・ド・ドゥ")) {
+    return {
+      imageName: "prince.jpg",
+      altText: "王子・プリンシパル",
+      characterType: "prince",
+    };
+  }
+
+  // 4. Classical Princess / Aurora / Clara / Coppelia / Fairy
+  if (kanji.includes("オーロラ") || kanji.includes("フロリナ") || kanji.includes("金平糖") || kanji.includes("クララ") || kanji.includes("スワニルダ") || kanji.includes("シンデレラ") || kanji.includes("リラの精") || kanji.includes("コッペリア") || kanji.includes("ライモンダ") || kanji.includes("ティアラ") || kanji.includes("チュチュ") || kanji.includes("ワルツ")) {
+    return {
+      imageName: "aurora.jpg",
+      altText: "オーロラ姫",
+      characterType: "aurora",
+    };
+  }
+
+  // 5. Swan Lake / Odette / Pure Classical White (Default)
+  return {
+    imageName: "odette.jpg",
+    altText: "白鳥オデット",
+    characterType: "odette",
+  };
+}
+
 export function getBalletMotionType(word: BalletWord | null): string {
   if (!word) return "dance-glide";
   const kanji = word.kanji;
@@ -475,6 +535,8 @@ export default function PlayScreen({ seatTier, onGameEnd, onBackToMenu }: PlaySc
   }, [currentWord, isPlaying]);
 
   const currentIcon = getBalletIcon(currentWord);
+  const dancerInfo = getRealisticDancer(currentWord);
+  const basePath = process.env.NODE_ENV === "production" ? "/BalletTyping" : "";
 
   const profit = earnedValue - seatTier.ticketPrice;
   const isProfitable = profit >= 0;
@@ -568,17 +630,36 @@ export default function PlayScreen({ seatTier, onGameEnd, onBackToMenu }: PlaySc
               {/* Overhead pin-spotlight beam illuminating the performer */}
               <div className="pin-spotlight-beam" />
               
-              {/* Dancing fairy dust / sparkle trail */}
+              {/* Dancing fairy dust / golden sparkle trail */}
               <div className="dancer-fairy-dust" aria-hidden="true">
                 <span className="dust-particle dust-1">✦</span>
                 <span className="dust-particle dust-2">✧</span>
                 <span className="dust-particle dust-3">✨</span>
+                <span className="dust-particle dust-4">✦</span>
               </div>
 
-              {/* Dancer / ballet motif performing directly on the stage floor */}
+              {/* Realistic Classical Ballerina on Stage */}
               <div className="ballet-dancer-on-stage">
-                <div className={`ballet-icon ${getBalletMotionType(currentWord)}`}>
-                  {currentIcon}
+                <div className={`realistic-dancer-figure ${dancerInfo.characterType} ${getBalletMotionType(currentWord)}`}>
+                  {/* Ornate Gold Filigree Floating Frame */}
+                  <div className="dancer-cameo-frame" />
+                  
+                  {/* Oil Painting Masterpiece Art */}
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={`${basePath}/dancers/${dancerInfo.imageName}`}
+                    alt={dancerInfo.altText}
+                    className="dancer-oil-artwork"
+                    loading="eager"
+                  />
+                  
+                  {/* Shimmering Lighting Glaze Overlay */}
+                  <div className="dancer-lighting-shimmer" />
+
+                  {/* Character/Term Badge */}
+                  <span className="dancer-role-badge">
+                    {currentIcon} {currentWord.kanji.length > 8 ? currentWord.kanji.slice(0, 7) + "…" : currentWord.kanji}
+                  </span>
                 </div>
               </div>
 
