@@ -253,7 +253,28 @@ export const balletWords: BalletWord[] = [
   { id: "188", kanji: "金糸刺繍のクラシックチュチュ", hiragana: "きんしししゅうのくらしっくちゅちゅ", price: 460, category: "衣装" },
   // 長め (S席)
   { id: "189", kanji: "スワロフスキーの煌めくティアラ", hiragana: "すわろふすきーのきらめくてぃあら", price: 680, category: "装飾" },
-  { id: "190", kanji: "トウシューズの先を固めるニス", hiragana: "とうしゅーずのさきをかためるにす", price: 680, category: "小物" }
+  { id: "190", kanji: "トウシューズの先を固めるニス", hiragana: "とうしゅーずのさきをかためるにす", price: 680, category: "小物" },
+
+  // =========================================================================
+  // --- 5. リラの精・リーズ・卒業舞踏会 (Lilac Fairy, Lise, Graduation Ball) ---
+  // =========================================================================
+  // 短め・中くらい (B席・A席)
+  { id: "191", kanji: "リラの精", hiragana: "りらのせい", price: 220, category: "主要人物" },
+  { id: "192", kanji: "リーズ", hiragana: "りーず", price: 200, category: "主要人物" },
+  { id: "193", kanji: "コーラス", hiragana: "こーらす", price: 200, category: "主要人物" },
+  { id: "194", kanji: "卒業舞踏会", hiragana: "そつぎょうぶとうかい", price: 380, category: "代表演目" },
+  { id: "195", kanji: "無益な用心", hiragana: "むえきなようじん", price: 250, category: "代表演目" },
+  { id: "196", kanji: "リーズとコーラス", hiragana: "りーずとこーらす", price: 380, category: "主要人物" },
+  { id: "197", kanji: "リーズの結婚", hiragana: "りーずのけっこん", price: 350, category: "代表演目" },
+  { id: "198", kanji: "リラの精の踊り", hiragana: "りらのせいのおどり", price: 400, category: "バリエーション" },
+  { id: "199", kanji: "リーズのバリエーション", hiragana: "りーずのばりえーしょん", price: 420, category: "バリエーション" },
+  { id: "200", kanji: "ラ・フィーユ・マル・ガルデ", hiragana: "らふぃーゆまるがるで", price: 420, category: "代表演目" },
+  { id: "201", kanji: "卒業舞踏会の無窮動", hiragana: "そつぎょうぶとうかいのむきゅうどう", price: 480, category: "名場面" },
+  // 長め (S席)
+  { id: "202", kanji: "眠れる森の美女 善の妖精リラの精のバリエーション", hiragana: "ねむれるもりのびじょぜんのようせいりらのせいのばりえーしょん", price: 760, category: "バリエーション" },
+  { id: "203", kanji: "ラ・フィーユ・マル・ガルデ リーズとピンクのリボン", hiragana: "らふぃーゆまるがるでりーずとぴんくのりぼん", price: 750, category: "名場面" },
+  { id: "204", kanji: "卒業舞踏会 女学生と士官候補生の華やかなワルツ", hiragana: "そつぎょうぶとうかいじょがくせいとしかんこうほせいのはなやかなわるつ", price: 780, category: "名場面" },
+  { id: "205", kanji: "卒業舞踏会 フェッテ競争と鼓手のバリエーション", hiragana: "そつぎょうぶとうかいふぇってきょうそうとこしのばりえーしょん", price: 760, category: "バリエーション" }
 ];
 
 export interface SeatTier {

@@ -92,6 +92,9 @@ export interface RealisticDancerInfo {
     | "sugarplum"
     | "nikia"
     | "firebird"
+    | "lilac_fairy"
+    | "lise"
+    | "graduation_ball"
     | "nutcracker_doll"
     | "mouse_king"
     | "coppelia_doll"
@@ -112,6 +115,47 @@ export function getRealisticDancer(word: BalletWord | null): RealisticDancerInfo
   }
   const kanji = word.kanji;
   const cat = word.category || "";
+
+  // ──────────────────────────────────────────────────────────────
+  // 🌟 特別優先キャラクター: リラの精・リーズ・卒業舞踏会
+  // ──────────────────────────────────────────────────────────────
+
+  // 🪄 リラの精 (Lilac Fairy - The Sleeping Beauty)
+  if (kanji.includes("リラの精") || kanji.includes("仙女")) {
+    return {
+      imageName: "lilac_fairy.jpg",
+      altText: "リラの精 (眠れる森の美女)",
+      characterType: "lilac_fairy",
+    };
+  }
+
+  // 🎀 リーズ (Lise - La Fille mal gardée / リーズの結婚)
+  if (
+    kanji.includes("リーズ") ||
+    kanji.includes("フィーユ・マル・ガルデ") ||
+    kanji.includes("無益な用心") ||
+    kanji.includes("コーラス")
+  ) {
+    return {
+      imageName: "lise.jpg",
+      altText: "リーズ (ラ・フィーユ・マル・ガルデ)",
+      characterType: "lise",
+    };
+  }
+
+  // 🎓 卒業舞踏会 (Graduation Ball)
+  if (
+    kanji.includes("卒業舞踏会") ||
+    kanji.includes("女学生") ||
+    kanji.includes("無窮動") ||
+    kanji.includes("鼓手")
+  ) {
+    return {
+      imageName: "graduation_ball.jpg",
+      altText: "卒業舞踏会",
+      characterType: "graduation_ball",
+    };
+  }
 
   // ──────────────────────────────────────────────────────────────
   // 🎭 A. 非ダンサーの象徴キャラクター・代表的な舞台小道具 (Props & Dolls)
@@ -221,7 +265,7 @@ export function getRealisticDancer(word: BalletWord | null): RealisticDancerInfo
   }
 
   // ──────────────────────────────────────────────────────────────
-  // 💃 B. 主要ダンサー・プリマ・プリンシパル (10 Classical Dancers)
+  // 💃 B. 主要ダンサー・プリマ・プリンシパル (Classical Dancers)
   // ──────────────────────────────────────────────────────────────
 
   // 9. 🔥 火の鳥 (The Firebird)
@@ -297,7 +341,7 @@ export function getRealisticDancer(word: BalletWord | null): RealisticDancerInfo
   }
 
   // 17. 👸 クラシカル・プリンセス (Sleeping Beauty Aurora, Cinderella, Swanhilda)
-  if (kanji.includes("オーロラ") || kanji.includes("フロリナ") || kanji.includes("スワニルダ") || kanji.includes("シンデレラ") || kanji.includes("リラの精") || kanji.includes("ライモンダ") || kanji.includes("パキータ") || kanji.includes("タリスマン") || kanji.includes("ダイアナ") || kanji.includes("グラン・パ・クラシック") || kanji.includes("眠れる森")) {
+  if (kanji.includes("オーロラ") || kanji.includes("フロリナ") || kanji.includes("スワニルダ") || kanji.includes("シンデレラ") || kanji.includes("ライモンダ") || kanji.includes("パキータ") || kanji.includes("タリスマン") || kanji.includes("ダイアナ") || kanji.includes("グラン・パ・クラシック") || kanji.includes("眠れる森")) {
     return {
       imageName: "aurora.jpg",
       altText: "オーロラ姫",
@@ -315,10 +359,13 @@ export function getRealisticDancer(word: BalletWord | null): RealisticDancerInfo
   }
 
   // ──────────────────────────────────────────────────────────────
-  // 🎲 C. 全18種類のハッシュ分散ローテーション（基礎ステップ・メイク・ポーズ等）
+  // 🎲 C. 全21種類のハッシュ分散ローテーション（基礎ステップ・メイク・ポーズ等）
   // ──────────────────────────────────────────────────────────────
   const charSum = kanji.split("").reduce((acc, c, idx) => acc + c.charCodeAt(0) * (idx + 1), 0);
   const pool: RealisticDancerInfo[] = [
+    { imageName: "lilac_fairy.jpg", altText: "リラの精 (眠れる森の美女)", characterType: "lilac_fairy" },
+    { imageName: "lise.jpg", altText: "リーズ (ラ・フィーユ・マル・ガルデ)", characterType: "lise" },
+    { imageName: "graduation_ball.jpg", altText: "卒業舞踏会", characterType: "graduation_ball" },
     { imageName: "odette.jpg", altText: "白鳥オデット", characterType: "odette" },
     { imageName: "pointe_shoes.jpg", altText: "サテンのトウシューズ", characterType: "pointe_shoes" },
     { imageName: "kitri.jpg", altText: "キトリ", characterType: "kitri" },
@@ -344,6 +391,18 @@ export function getRealisticDancer(word: BalletWord | null): RealisticDancerInfo
 export function getBalletMotionType(word: BalletWord | null): string {
   if (!word) return "dance-glide";
   const kanji = word.kanji;
+  // Graduation Ball / Pirouette / Fouette / lively spins
+  if (kanji.includes("卒業舞踏会") || kanji.includes("無窮動") || kanji.includes("ピルエット") || kanji.includes("フェッテ") || kanji.includes("回転") || kanji.includes("風車") || kanji.includes("トゥールナン") || kanji.includes("アン・ドゥオール") || kanji.includes("アン・ドゥダン")) {
+    return "dance-spin";
+  }
+  // Lise / Jump / grand allegro / birds / winged creatures
+  if (kanji.includes("リーズ") || kanji.includes("フィーユ・マル・ガルデ") || kanji.includes("ジュテ") || kanji.includes("跳躍") || kanji.includes("青い鳥") || kanji.includes("鳥") || kanji.includes("火の鳥") || kanji.includes("シルフィード") || kanji.includes("ウィリ") || kanji.includes("キューピッド") || kanji.includes("カブリオール") || kanji.includes("アントルシャ") || kanji.includes("ブリゼ") || kanji.includes("パディシャ") || kanji.includes("エシャッペ")) {
+    return "dance-leap";
+  }
+  // Lilac Fairy / Swans / graceful floating arabesque
+  if (kanji.includes("リラの精") || kanji.includes("白鳥") || kanji.includes("オデット") || kanji.includes("オディール") || kanji.includes("黒鳥") || kanji.includes("湖畔") || kanji.includes("アダージョ") || kanji.includes("タリスマン") || kanji.includes("フロリナ")) {
+    return "dance-swan";
+  }
   // Clockwork / doll / toy soldier / mouse king characters
   if (kanji.includes("コッペリア") || kanji.includes("からくり人形") || kanji.includes("くるみ割り") || kanji.includes("兵隊") || kanji.includes("ドロッセルマイヤー") || kanji.includes("博士")) {
     return "dance-doll";
@@ -352,21 +411,9 @@ export function getBalletMotionType(word: BalletWord | null): string {
   if (kanji.includes("トウシューズ") || kanji.includes("ポワント") || kanji.includes("ティアラ") || kanji.includes("チュチュ") || kanji.includes("リボン") || kanji.includes("扇子") || kanji.includes("花束") || kanji.includes("オーケストラ")) {
     return "dance-prop-float";
   }
-  // Jump / grand allegro / birds / winged creatures
-  if (kanji.includes("ジュテ") || kanji.includes("跳躍") || kanji.includes("青い鳥") || kanji.includes("鳥") || kanji.includes("火の鳥") || kanji.includes("妖精") || kanji.includes("シルフィード") || kanji.includes("ウィリ") || kanji.includes("キューピッド") || kanji.includes("カブリオール") || kanji.includes("アントルシャ") || kanji.includes("ブリゼ") || kanji.includes("パディシャ") || kanji.includes("エシャッペ")) {
-    return "dance-leap";
-  }
-  // Pirouette / Fouette / spins / turns
-  if (kanji.includes("ピルエット") || kanji.includes("フェッテ") || kanji.includes("回転") || kanji.includes("風車") || kanji.includes("トゥールナン") || kanji.includes("アン・ドゥオール") || kanji.includes("アン・ドゥダン")) {
-    return "dance-spin";
-  }
   // Dramatic / combat / passionate characters / variations
   if (kanji.includes("決闘") || kanji.includes("剣") || kanji.includes("海賊") || kanji.includes("カルメン") || kanji.includes("エスパーダ") || kanji.includes("キトリ") || kanji.includes("エスメラルダ") || kanji.includes("サタネラ") || kanji.includes("ダイアナ") || kanji.includes("ねずみ")) {
     return "dance-passion";
-  }
-  // Swans / graceful floating
-  if (kanji.includes("白鳥") || kanji.includes("オデット") || kanji.includes("オディール") || kanji.includes("黒鳥") || kanji.includes("湖畔") || kanji.includes("アダージョ") || kanji.includes("タリスマン") || kanji.includes("フロリナ")) {
-    return "dance-swan";
   }
   // Default graceful glide & float
   return "dance-glide";
