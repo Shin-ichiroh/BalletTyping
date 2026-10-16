@@ -1335,6 +1335,71 @@ body {
   box-shadow: 0 0 22px rgba(230, 190, 80, 0.6);
 }
 
+/* Non-dancer dolls & iconic classical ballet props glows */
+.realistic-dancer-figure.nutcracker_doll {
+  filter: drop-shadow(0 14px 22px rgba(0, 0, 0, 0.9)) drop-shadow(0 0 32px rgba(220, 40, 40, 0.75));
+}
+.realistic-dancer-figure.nutcracker_doll .dancer-cameo-frame {
+  border-color: rgba(255, 215, 100, 0.95);
+  box-shadow: 0 0 24px rgba(220, 40, 40, 0.65);
+}
+
+.realistic-dancer-figure.mouse_king {
+  filter: drop-shadow(0 14px 22px rgba(0, 0, 0, 0.95)) drop-shadow(0 0 32px rgba(160, 70, 220, 0.75));
+}
+.realistic-dancer-figure.mouse_king .dancer-cameo-frame {
+  border-color: rgba(190, 110, 255, 0.85);
+  box-shadow: 0 0 24px rgba(140, 50, 200, 0.65);
+}
+
+.realistic-dancer-figure.coppelia_doll {
+  filter: drop-shadow(0 14px 22px rgba(0, 0, 0, 0.9)) drop-shadow(0 0 32px rgba(245, 190, 90, 0.75));
+}
+.realistic-dancer-figure.coppelia_doll .dancer-cameo-frame {
+  border-color: rgba(255, 210, 120, 0.9);
+  box-shadow: 0 0 22px rgba(235, 175, 70, 0.6);
+}
+
+.realistic-dancer-figure.pointe_shoes {
+  filter: drop-shadow(0 14px 22px rgba(0, 0, 0, 0.9)) drop-shadow(0 0 32px rgba(255, 182, 193, 0.75));
+}
+.realistic-dancer-figure.pointe_shoes .dancer-cameo-frame {
+  border-color: rgba(255, 200, 215, 0.9);
+  box-shadow: 0 0 22px rgba(244, 140, 170, 0.6);
+}
+
+.realistic-dancer-figure.royal_tiara {
+  filter: drop-shadow(0 14px 22px rgba(0, 0, 0, 0.9)) drop-shadow(0 0 35px rgba(255, 240, 150, 0.85));
+}
+.realistic-dancer-figure.royal_tiara .dancer-cameo-frame {
+  border-color: rgba(255, 245, 190, 0.98);
+  box-shadow: 0 0 26px rgba(255, 225, 110, 0.75);
+}
+
+.realistic-dancer-figure.spanish_fan {
+  filter: drop-shadow(0 14px 22px rgba(0, 0, 0, 0.9)) drop-shadow(0 0 32px rgba(230, 30, 60, 0.75));
+}
+.realistic-dancer-figure.spanish_fan .dancer-cameo-frame {
+  border-color: rgba(255, 90, 110, 0.9);
+  box-shadow: 0 0 24px rgba(220, 20, 50, 0.65);
+}
+
+.realistic-dancer-figure.classical_tutu {
+  filter: drop-shadow(0 14px 22px rgba(0, 0, 0, 0.9)) drop-shadow(0 0 32px rgba(245, 235, 255, 0.75));
+}
+.realistic-dancer-figure.classical_tutu .dancer-cameo-frame {
+  border-color: rgba(255, 250, 240, 0.95);
+  box-shadow: 0 0 24px rgba(235, 220, 255, 0.6);
+}
+
+.realistic-dancer-figure.violin_bouquet {
+  filter: drop-shadow(0 14px 22px rgba(0, 0, 0, 0.9)) drop-shadow(0 0 32px rgba(230, 120, 70, 0.75));
+}
+.realistic-dancer-figure.violin_bouquet .dancer-cameo-frame {
+  border-color: rgba(245, 165, 100, 0.9);
+  box-shadow: 0 0 24px rgba(215, 100, 50, 0.65);
+}
+
 /* --------------------------------------------------------- */
 /* Realistic Classical Ballet Choreography Animations        */
 /* --------------------------------------------------------- */
@@ -1364,9 +1429,14 @@ body {
   animation: realisticSwanLake 2.6s ease-in-out infinite alternate;
 }
 
-/* Coppélia Mechanical Doll Steps */
+/* Coppélia & Nutcracker Mechanical Doll Steps */
 .realistic-dancer-figure.dance-doll {
   animation: realisticClockwork 1.3s steps(5, jump-none) infinite alternate;
+}
+
+/* Classical Ballet Props Gentle Float & Jewel Tilt */
+.realistic-dancer-figure.dance-prop-float {
+  animation: realisticPropFloat 2.4s ease-in-out infinite alternate;
 }
 
 /* 1. Realistic Pas de Bourrée (Subtle fluttering pointe elevation) */
@@ -1468,6 +1538,19 @@ body {
   }
   100% {
     transform: translateY(0) rotate(3deg);
+  }
+}
+
+/* 7. Realistic Classical Prop Floating & Gentle Shimmer */
+@keyframes realisticPropFloat {
+  0% {
+    transform: translateY(0px) rotate(-2deg) scale(0.99);
+  }
+  50% {
+    transform: translateY(-14px) rotate(2deg) scale(1.03);
+  }
+  100% {
+    transform: translateY(-4px) rotate(-1deg) scale(1.01);
   }
 }
 
