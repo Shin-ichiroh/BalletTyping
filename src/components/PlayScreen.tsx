@@ -120,8 +120,15 @@ export function getRealisticDancer(word: BalletWord | null): RealisticDancerInfo
   // 🌟 特別優先キャラクター: リラの精・リーズ・卒業舞踏会
   // ──────────────────────────────────────────────────────────────
 
-  // 🪄 リラの精 (Lilac Fairy - The Sleeping Beauty)
-  if (kanji.includes("リラの精") || kanji.includes("仙女")) {
+  // 🪄 リラの精 (Lilac Fairy & Fairies of The Sleeping Beauty)
+  if (
+    kanji.includes("リラの精") ||
+    kanji.includes("仙女") ||
+    kanji.includes("優しさの精") ||
+    kanji.includes("勇気の精") ||
+    kanji.includes("鷹揚の精") ||
+    kanji.includes("のんきなカナリア")
+  ) {
     return {
       imageName: "lilac_fairy.jpg",
       altText: "リラの精 (眠れる森の美女)",
@@ -134,7 +141,12 @@ export function getRealisticDancer(word: BalletWord | null): RealisticDancerInfo
     kanji.includes("リーズ") ||
     kanji.includes("フィーユ・マル・ガルデ") ||
     kanji.includes("無益な用心") ||
-    kanji.includes("コーラス")
+    kanji.includes("コーラス") ||
+    kanji.includes("シモーヌ") ||
+    kanji.includes("木靴") ||
+    kanji.includes("麦穂") ||
+    kanji.includes("ピンクのリボン") ||
+    kanji.includes("アラン")
   ) {
     return {
       imageName: "lise.jpg",
@@ -148,7 +160,9 @@ export function getRealisticDancer(word: BalletWord | null): RealisticDancerInfo
     kanji.includes("卒業舞踏会") ||
     kanji.includes("女学生") ||
     kanji.includes("無窮動") ||
-    kanji.includes("鼓手")
+    kanji.includes("鼓手") ||
+    kanji.includes("老将軍") ||
+    kanji.includes("女学院長")
   ) {
     return {
       imageName: "graduation_ball.jpg",
